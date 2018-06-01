@@ -4,3 +4,4 @@
 /testdata/db/schema.sql
 /vendor
 /vendor.orig
+*.swp
