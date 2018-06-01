@@ -19,15 +19,15 @@ RUN go get gopkg.in/alecthomas/gometalinter.v2 \
 	&& gometalinter.v2 --install
 
 # copy source files
-COPY . /go/src/github.com/amacneil/dbmate
-WORKDIR /go/src/github.com/amacneil/dbmate
+COPY . /go/src/github.robot.car/rajan-ponnappan/dbmate
+WORKDIR /go/src/github.robot.car/rajan-ponnappan/dbmate
 
 # build
 RUN make dep install build
 
 # runtime image
 FROM debian:stretch-slim
-COPY --from=build /go/src/github.com/amacneil/dbmate/dist/dbmate-linux-amd64 \
+COPY --from=build /go/src/github.robot.car/rajan-ponnappan/dbmate/dist/dbmate-linux-amd64 \
 	/usr/local/bin/dbmate
 WORKDIR /app
 ENTRYPOINT ["/usr/local/bin/dbmate"]
