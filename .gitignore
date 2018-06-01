@@ -3,3 +3,4 @@
 /dist
 /testdata/db/schema.sql
 /vendor
+/vendor.orig
