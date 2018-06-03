@@ -107,9 +107,9 @@ func (db *DB) CreateAndMigrate(dryrun bool) error {
 	return db.Migrate(dryrun)
 }
 
-// Create creates the current database. If dryrun is true, it doesn't create the database but only returns
-// if create would succeed.
-func (db *DB) Create(dryrun bool) error {
+// Create creates the current database. If dryrun is true, it doesn't
+// create the database but only returns if create would succeed.
+func (db *DB) Create() error {
 	drv, err := db.GetDriver()
 	if err != nil {
 		return err
@@ -197,7 +197,6 @@ func doTransaction(db *sql.DB, txFunc func(Transaction) error) error {
 		if err1 := tx.Rollback(); err1 != nil {
 			return err1
 		}
-
 		return err
 	}
 
@@ -214,7 +213,6 @@ func dryrunTransaction(db *sql.DB, txFunc func(Transaction) error) error {
 		if err1 := tx.Rollback(); err1 != nil {
 			return err1
 		}
-
 		return err
 	}
 
@@ -270,6 +268,8 @@ func (db *DB) migrateDryrun() error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("applied: ", applied)
 	// begin transaction
 	err = dryrunTransaction(sqlDB, func(tx Transaction) error {
 		for _, filename := range files {
@@ -286,6 +286,7 @@ func (db *DB) migrateDryrun() error {
 			}
 
 			// run actual migration
+			fmt.Println(migration["up"])
 			if _, err := tx.Exec(migration["up"]); err != nil {
 				return err
 			}

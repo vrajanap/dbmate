@@ -77,14 +77,8 @@ func NewApp() *cli.App {
 		{
 			Name:  "create",
 			Usage: "Create database",
-			Flags: []cli.Flag{
-				cli.BoolFlag{
-					Name:  "dryrun",
-					Usage: "Only checks if this command can succeed by testing it on the database",
-				},
-			},
 			Action: action(func(db *dbmate.DB, c *cli.Context) error {
-				return db.Create(c.GlobalBool("dryrun"))
+				return db.Create()
 			}),
 		},
 		{

@@ -1,6 +1,6 @@
 DC := docker-compose
 BUILD_FLAGS := -ldflags '-s'
-PACKAGES := . ./pkg/...
+PACKAGES := ./pkg/...
 
 .PHONY: all
 all: dep install test lint build
@@ -15,7 +15,7 @@ install:
 
 .PHONY: test
 test:
-	go test -v $(PACKAGES)
+	go test -v $(PACKAGES) -run TestMigrateDryrun
 
 .PHONY: lint
 lint:
